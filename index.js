@@ -96,9 +96,11 @@ for (var i = 0; i < 4; i++)
     });
 }
 
-devNamesRef.once('value')
-  .then(function(snapshot){
-    console.log(snapshot.val());
+var data;
+devNamesRef.on('value', function(snapshot)
+{
+    data = snapshot.val();
+    console.log(data, "\n");
 });
 
 
