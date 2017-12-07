@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "smartlight-188310",
+  "private_key_id": "b35ad744a03e2a49d5efdb27210311ebe7617967",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCtW9OcczSbDX/r\nhTb70Z4bF2Q4y4pCckMhd4/FzYn8ZKXGyAhEEF1bxTdzJEf7Uh7Moh6oSjhqfjOj\nM8QA5jZVYbifgTVBhsuVucfCQ2IMhF9FadcnFTh58qen53i97oviEjSr/FsNSzwD\noNucOHANfEyv3gOFFh8XqFSmJJVYbppb6BjxCCv3E1cwJJfn6cni3xNA8RzKQDhP\nolHd5sMlKJ/qCMnGKbZrFUcfsTEi2bWu2/51KzbEqy1PuLoZGgFCvBIhTD+tHwnO\nn8PFnEa959Z+vYfMD+5I1IcXKjRJX9R5//e3BKGJATOz1SEIjduLlLqiJNWxCMQs\nQ/LR86X9AgMBAAECggEARYnWleSuft3I6MAMgLGiUqqs5I1c3e94lyWfEdCzX389\n8kFN84N+929iITk1+I2F1j7XvljbTXhnHTmID3ZI6DHlPXI2Wx0Hb/1QMFAYNf4p\nOy5MBBzihSQ9dUAH8mQMT3hPEYgOPARoQ+pT/VO0OuyX1FnhnpJzkWlP3z9AevJl\nCV5ri+L+NF+oDEgwnscX3042PO431UITLJOUsHIaJR1t178+2js48xLzTFBfCEBy\n0/+NhhAAK++gaV4ff5USF1OR+Skp/BvZFHgjpQz5LykV04SPCyxqnqCO/zGQHt3j\nigjjNn1I/5yiU/n9BSvYfQOZ5j/vc3UqAemD8qlHbwKBgQDnsxGqeu7NMxceNwZR\ni9Dt1lmlinl/WDtnDxnTW6+ypIwzubEXjwXrB1wAgeEvqa+vEBjAS+ItXasE/NEV\nRN28BFIW7onzxwur7Wt6uDRvIAkUaHp9pOOCPOPS8Uatm6rehFo3PAe+08QrgroK\nZDh5ROWTB8hS9rRNtmHJLFEyawKBgQC/iluYj54ORZEM+Nzdb9qHhy+0IyZUG6XM\nbiTZ8vq8bmepeU3tiQWayKe9IGTW6CjBFzWhlM2sFm82V4Z2vJN39fiAEUhteRkk\n+hZ7FbnGvT+gxZywIH0b7Q8a1rKufRMhDSfsakDAIQS1GbT6yhbl2BP4HdjGzZX9\noSFPjQOzNwKBgA0hZsTkhpf2Zz79G0yPwd1YomfxOwVueJ9UicAimAhlrtRXl6Og\nJVO2bQ5STfKniR9AqEZthnnPrxtvQGIWLwKys/w8tHCuPQkXQVoJCl+pzxnq+dYY\n/BOrY7XWmozIH5zQn1Q2ALJdyeY1WFmyaEjnEKOOc1nQRVOKHGyMKGXVAoGAQoig\nCp2QrKpzmUr1BaJuCXfnFS7EiKDV9e4otOCXQk8jiRYPAL0BCmQ7CBIxlQkt5uzV\n/1u+GdHtLbY3ihU1MI1rlajrPMO8/UA2AOlqD+P7LzCVngSbENFG1u7PQJdHxspY\nHOJHvbV6eiIE4LzEOXDWdvB/NYeCW4jWFlkIeP8CgYAFVaX58CuXoibqT1upl2N6\nmwI9xAroM63N+JMeE5DhGP5nBRYvN+sD2MU9cK1DB0Bycq0n0syttA5cxFzSIY0r\nNgrj3Vs4DWMihmcrLAJ3iPBxb03MDpZjTkwfwbyUJoHaU+8ep7TXDFZkCfnoW0TN\nNqI1mu4oBEX6kxCnsGadRA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "smartlightbrowser@smartlight-188310.iam.gserviceaccount.com",
+  "client_id": "100489739101241761945",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/smartlightbrowser%40smartlight-188310.iam.gserviceaccount.com"
+}
