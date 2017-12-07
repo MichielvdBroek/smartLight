@@ -20,7 +20,10 @@ Devs.push({
     'age': 20
 });
 
-
+var html = `
+<h1> some text\n <\h1>
+<h6> input text: <input type="text" name="inputText"><br> </h6>
+`;
 //=> do on return from function.
 //************************
 //*define server         *
@@ -31,7 +34,7 @@ const server = http.createServer((req, res) => {
 //type plain text
     res.setHeader('Content-type', 'text/html');
 //type html text
-    res.write('<h1> bas is een faggot <\h1>');
+    res.write(html);
     
     res.end();
 });
@@ -92,3 +95,15 @@ for (var i = 0; i < 4; i++)
         age: Devs[i].age
     });
 }
+
+devNamesRef.once('value')
+  .then(function(snapshot){
+    console.log(snapshot.val());
+});
+
+
+
+//server moet data kunnen ontvangen op een script.
+//er runt dus een script als server. wanneer deze data ontvangt wordt deze afgehandeld
+//data opties:
+    //"read", "current mode/huidige licht kleur/lampIDs"
