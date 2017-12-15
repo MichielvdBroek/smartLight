@@ -7,6 +7,7 @@ const port = 3000;
 
 var sections = [];
 var lights = [];
+var sensors = [];
 
 sections.push(
     {'id' : 1, 'modeid' : 1, 'red' : 0, 'green' : 0, 'blue' : 0},
@@ -15,7 +16,7 @@ sections.push(
 );
 
 lights.push(
-    {'id' : 1, 'sid' : 1,},
+    {'id' : 1, 'sid' : 1},
     {'id' : 2, 'sid' : 1},
     {'id' : 3, 'sid' : 1},
     {'id' : 4, 'sid' : 2},
@@ -23,6 +24,11 @@ lights.push(
     {'id' : 6, 'sid' : 3}
 );
 
+sensors.push(
+    {'id' : 1, 'sid' : 1, 'sound' : 3.1415, 'people' : 2},
+    {'id' : 2, 'sid' : 2, 'sound' : 31.415, 'people' : 3},
+    {'id' : 3, 'sid' : 3, 'sound' : 0, 'people' : 0}
+);
 /*var html = `
 <h1> some text\n <\h1>
 <h6> input text: <input type="text" name="inputText"><br> </h6>
@@ -118,18 +124,6 @@ var dataRef = firebaseRef.child('data');
 //************************
 //*push devs to in db    *
 //************************
-for (var i = 0; i < 6; i++) 
-{
-    var lightRef = dataRef.child('lights/' + lights[i].id);
-    var pushKey = lightRef.push();
-
-    var message = {
-        id : lights[i].id,
-        sid : lights[i].sid
-    };
-
-    lightRef.update(message);
-}
 
 for (var i = 0; i < 3; i++) 
 {
@@ -145,6 +139,36 @@ for (var i = 0; i < 3; i++)
     };
 
     sectionRef.update(message);
+}
+
+for (var i = 0; i < 6; i++) 
+{
+    var lightRef = dataRef.child('lights/' + lights[i].id);
+    var pushKey = lightRef.push();
+
+    var message = {
+        id : lights[i].id,
+        sid : lights[i].sid
+    };
+
+    lightRef.update(message);
+}
+
+
+for (var i = 0; i < 3; i++) 
+{
+    var sensorRef = dataRef.child('sensor/' + sensors[i].id);
+    var pushKey = sensorRef.push();
+
+    var message = {
+
+        id : sensors[i].id,
+        sid : sensors[i].sid,
+        sound : sensors[i].sound,
+        people : sensors[i].people
+    };
+
+    sensorRef.update(message);
 }
 
 var data;
