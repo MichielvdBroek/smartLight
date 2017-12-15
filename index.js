@@ -5,25 +5,25 @@ var mqtt = require('mqtt');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-var Devs = [];
-Devs.push({
-    'name' : 'Michiel',
-    'age': 19
-});
-Devs.push({
-    'name' : 'Bas',
-    'age': 22
-});
-Devs.push({
-    'name' : 'Simon',
-    'age': 21
-});
-Devs.push({
-    'name' : 'Milan',
-    'age': 20
-});
+var sections = [];
+var lights = [];
 
-var html = `
+sections.push(
+    {'id' : 1, 'modeid' : 1, 'red' : 0, 'green' : 0, 'blue' : 0},
+    {'id' : 2, 'modeid' : 2, 'red' : 255, 'green' : 0, 'blue' : 0},
+    {'id' : 3, 'modeid' : 3, 'red' : 0, 'green' : 255, 'blue' : 0}
+);
+
+lights.push(
+    {'id' : 1, 'sid' : 1,},
+    {'id' : 2, 'sid' : 1},
+    {'id' : 3, 'sid' : 1},
+    {'id' : 4, 'sid' : 2},
+    {'id' : 5, 'sid' : 2},
+    {'id' : 6, 'sid' : 3}
+);
+
+/*var html = `
 <h1> some text\n <\h1>
 <h6> input text: <input type="text" name="inputText"><br> </h6>
 `;
@@ -43,22 +43,12 @@ const server = http.createServer((req, res) => {
 });
 
 //************************
-//*define firebase       *
+//*set up server/webpage *
 //************************
-firebase.initializeApp({
-  apiKey: "AIzaSyAuLNhAnNdl6PFprTubZA_qS4is2moV9Uw",
-  serviceAccount: "./smartLight-b35ad744a03e.json",
-  databaseURL: "https://smartlight-188310.firebaseio.com",
+/*server.listen(port, hostname, () => {
+    console.log(hostname + ": " + "server started on port " + port);
 });
-
-//************************
-//*define mqtt client    *
-//************************
-//username i339492_smartlight
-//pass Ccp1UA1u1XG6A1
-var client = mqtt.connect('mqtt://test.mosquitto.org');
-//var client = mqtt.connect('mqtt://mqtt.fhict.nl/'); //needs log in data, how?!
-
+*/
 
                                             //************************
                                             //*define testfunction   *
@@ -78,19 +68,22 @@ var client = mqtt.connect('mqtt://test.mosquitto.org');
 console.log('\n\n');
 
 //************************
-//*set up server/webpage *
+//*define firebase       *
 //************************
-server.listen(port, hostname, () => {
-    console.log(hostname + ": " + "server started on port " + port);
+firebase.initializeApp({
+  apiKey: "AIzaSyAuLNhAnNdl6PFprTubZA_qS4is2moV9Uw",
+  serviceAccount: "./smartLight-b35ad744a03e.json",
+  databaseURL: "https://smartlight-188310.firebaseio.com",
 });
 
 
 //************************
-//*set up firebase refs  *
+//*define mqtt client    *
 //************************
-var firebaseRef = firebase.database().ref();
-var devNamesRef = firebaseRef.child('devs');
-
+//username i339492_smartlight
+//pass Ccp1UA1u1XG6A1
+var client = mqtt.connect('mqtt://test.mosquitto.org');
+//var client = mqtt.connect('mqtt://mqtt.fhict.nl/'); //needs log in data, how?!
 
 //************************
 //*sub client to mqtt    *
@@ -110,28 +103,52 @@ client.on('message', function(topic, message) {
 });
 
 //************************
+//*set up firebase refs  *
+//************************
+var firebaseRef = firebase.database().ref();
+var dataRef = firebaseRef.child('data');
+
+//************************
 //*clear 'devs' in db    *
 //************************
-firebaseRef.update({
-    'devs': null
-});
+//firebaseRef.update({
+//    'data': null
+//});
 
 //************************
 //*push devs to in db    *
 //************************
-for (var i = 0; i < 4; i++) 
+for (var i = 0; i < 6; i++) 
 {
-    var devNamesEntry = devNamesRef.push();
-    
-    console.log("a push key for the database has been created: " + devNamesEntry.key);
-    devNamesEntry.set({
-        name: Devs[i].name,
-        age: Devs[i].age
-    });
+    var lightRef = dataRef.child('lights/' + lights[i].id);
+    var pushKey = lightRef.push();
+
+    var message = {
+        id : lights[i].id,
+        sid : lights[i].sid
+    };
+
+    lightRef.update(message);
+}
+
+for (var i = 0; i < 3; i++) 
+{
+    var sectionRef = dataRef.child('section/' + sections[i].id);
+    var pushKey = sectionRef.push();
+
+    var message = {
+        id : sections[i].id,
+        modeid : sections[i].modeid,
+        red : sections[i].red,
+        green : sections[i].green,
+        blue : sections[i].blue
+    };
+
+    sectionRef.update(message);
 }
 
 var data;
-devNamesRef.on('value', function(snapshot)
+dataRef.on('value', function(snapshot)
 {
     data = snapshot.val();
     console.log(data, "\n");
