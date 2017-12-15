@@ -82,6 +82,52 @@ firebase.initializeApp({
   databaseURL: "https://smartlight-188310.firebaseio.com",
 });
 
+//************************
+//*set up firebase refs  *
+//************************
+var firebaseRef = firebase.database().ref();
+var fbdataRef = firebaseRef.child('data');
+var fbsectionsRef = fbdataRef.child('section');
+var fblightsRef = fbdataRef.child('light');
+var fbsensorsRef = fbdataRef.child('sensor');
+//************************
+//*clear 'devs' in db    *
+//************************
+//firebaseRef.update({
+//    'data': null
+//});
+
+//******************************
+//*initialize database listener*
+//******************************
+fbsectionsRef.on('child_changed', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel +'/sections', '#id:' + data.id +
+                                            '#modeid:' + data.modeid + 
+                                            '#R:' + data.red + 
+                                            '#G:' + data.green +
+                                            '#B:' + data.blue);
+    console.log('changed', data);
+});
+
+fblightsRef.on('child_changed', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel + '/lights', '#id:' + data.id + 
+                                            '#sid:' + data.sid);
+    console.log('changed', data);
+});
+
+fbsensorsRef.on('child_changed', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel + '/sensors', '#id:' + data.id + 
+                                            '#sid:' + data.sid + 
+                                            '#sound:' + data.sound + 
+                                            '#people:' + data.people);
+    console.log('changed', data);
+});
 
 //************************
 //*define mqtt client    *
@@ -94,9 +140,13 @@ var client = mqtt.connect('mqtt://test.mosquitto.org');
 //************************
 //*sub client to mqtt    *
 //************************
+var mqttChannel = 'private/i123456';
 client.on('connect', function() {
-    client.subscribe('private/i123456');
-    client.publish('private/i123456', 'connected');
+    client.subscribe(mqttChannel);
+    client.subscribe(mqttChannel + '/lights');
+    client.subscribe(mqttChannel + '/sections');
+    client.subscribe(mqttChannel + '/sensors');
+    client.publish(mqttChannel, 'connected');
 
 });
 
@@ -109,25 +159,12 @@ client.on('message', function(topic, message) {
 });
 
 //************************
-//*set up firebase refs  *
-//************************
-var firebaseRef = firebase.database().ref();
-var dataRef = firebaseRef.child('data');
-
-//************************
-//*clear 'devs' in db    *
-//************************
-//firebaseRef.update({
-//    'data': null
-//});
-
-//************************
 //*push devs to in db    *
 //************************
 
 for (var i = 0; i < 3; i++) 
 {
-    var sectionRef = dataRef.child('section/' + sections[i].id);
+    var sectionRef = fbsectionsRef.child(sections[i].id);
     var pushKey = sectionRef.push();
 
     var message = {
@@ -143,7 +180,7 @@ for (var i = 0; i < 3; i++)
 
 for (var i = 0; i < 6; i++) 
 {
-    var lightRef = dataRef.child('lights/' + lights[i].id);
+    var lightRef = fblightsRef.child(lights[i].id);
     var pushKey = lightRef.push();
 
     var message = {
@@ -157,7 +194,7 @@ for (var i = 0; i < 6; i++)
 
 for (var i = 0; i < 3; i++) 
 {
-    var sensorRef = dataRef.child('sensor/' + sensors[i].id);
+    var sensorRef = fbsensorsRef.child(sensors[i].id);
     var pushKey = sensorRef.push();
 
     var message = {
@@ -171,19 +208,12 @@ for (var i = 0; i < 3; i++)
     sensorRef.update(message);
 }
 
-var data;
-dataRef.on('value', function(snapshot)
-{
-    data = snapshot.val();
-    console.log(data, "\n");
-});
-
-var sendmqttMessage = function(){
-    client.publish('private/i123456', 'can i say something?');
+//var sendmqttMessage = function(){
+//    client.publish(mqttChannel + '/lights', '{1: {id: 1, sid: 1}}');
     //setTimeout(sendmqttMessage, 1000);
-};
+//};
 
-setTimeout(sendmqttMessage, 4000);
+//setTimeout(sendmqttMessage, 4000);
 
 //server moet data kunnen ontvangen op een script.
 //er runt dus een script als server. wanneer deze data ontvangt wordt deze afgehandeld
