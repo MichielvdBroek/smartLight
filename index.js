@@ -129,6 +129,34 @@ fbsensorsRef.on('child_changed', function(snapshot)
     console.log('changed', data);
 });
 
+fbsectionsRef.on('child_added', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel +'/sections', '#id:' + data.id +
+                                            '#modeid:' + data.modeid + 
+                                            '#R:' + data.red + 
+                                            '#G:' + data.green +
+                                            '#B:' + data.blue);
+    console.log('added', data);
+});
+
+fblightsRef.on('child_added', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel + '/lights', '#id:' + data.id + 
+                                            '#sid:' + data.sid);
+    console.log('added', data);
+});
+
+fbsensorsRef.on('child_added', function(snapshot)
+{
+    var data = snapshot.val();
+    client.publish(mqttChannel + '/sensors', '#id:' + data.id + 
+                                            '#sid:' + data.sid + 
+                                            '#sound:' + data.sound + 
+                                            '#people:' + data.people);
+    console.log('added', data);
+});
 //************************
 //*define mqtt client    *
 //************************
@@ -161,7 +189,7 @@ client.on('message', function(topic, message) {
 //************************
 //*push devs to in db    *
 //************************
-
+/*
 for (var i = 0; i < 3; i++) 
 {
     var sectionRef = fbsectionsRef.child(sections[i].id);
@@ -207,7 +235,7 @@ for (var i = 0; i < 3; i++)
 
     sensorRef.update(message);
 }
-
+*/
 //var sendmqttMessage = function(){
 //    client.publish(mqttChannel + '/lights', '{1: {id: 1, sid: 1}}');
     //setTimeout(sendmqttMessage, 1000);
